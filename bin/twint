@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+# WOLF_DESC: Scraping OSINT de Twitter/X (Twint)
+set -euo pipefail
+
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+TOOL_DIR="$BASE_DIR/twint"
+
+# intenta como módulo
+if python3 -c "import twint" >/dev/null 2>&1; then
+  exec python3 -m twint "$@"
+fi
+
+# si no está instalado, intenta ejecutarlo desde el repo
+if [[ -d "$TOOL_DIR" ]]; then
+  cd "$TOOL_DIR"
+  # muchas veces requiere instalación previa; al menos mostramos ayuda si existe
+  if [[ -f "setup.py" ]]; then
+    echo "[!] Twint no parece instalado como módulo. Prueba a instalarlo dentro del venv/pip:"
+    echo "    cd ~/wolfpack-socmint/twint && pip3 install -r requirements.txt && pip3 install ."
+    exit 1
+  fi
+fi
+
+echo "[!] No encuentro Twint (ni modulo importable ni repo usable)."
+exit 1

@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+BASE="${HOME}/wolfpack-socmint"
+TOOL_DIR="${BASE}/tools/social_mapper"
+VENV="${BASE}/venvs/social-mapper"
+LOGS="${BASE}/logs"
+
+mkdir -p "$LOGS"
+
+if [[ ! -d "$TOOL_DIR" ]]; then
+  echo "[!] Social Mapper no está instalado en: $TOOL_DIR"
+  echo "[i] Ejecuta el instalador primero."
+  exit 1
+fi
+
+if [[ ! -f "$VENV/bin/activate" ]]; then
+  echo "[!] venv no encontrado en: $VENV"
+  echo "[i] Ejecuta el instalador primero."
+  exit 1
+fi
+
+# shellcheck disable=SC1090
+source "$VENV/bin/activate"
+cd "$TOOL_DIR"
+
+if [[ ! -f "social_mapper.py" ]]; then
+  echo "[!] No se encontró social_mapper.py en $TOOL_DIR"
+  exit 1
+fi
+
+echo "[*] Ejecutando Social Mapper (Experimental/Legacy)"
+echo "[*] Directorio: $TOOL_DIR"
+echo "[*] Python: $(python --version 2>&1)"
+echo "[*] Log runtime: $LOGS/social-mapper-runtime.log"
+echo
+
+python social_mapper.py "$@" 2>&1 | tee -a "$LOGS/social-mapper-runtime.log"

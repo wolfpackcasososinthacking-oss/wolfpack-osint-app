@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+# WOLF_DESC: Extraer mensajes de Telegram PUBLICO (pendiente de integrar herramienta exacta)
+set -euo pipefail
+
+echo "[!] Aun no esta enlazada la herramienta concreta de Telegram."
+echo "    Dime cual usas (nombre del comando o carpeta del script) y la integro aqui."
+echo "    Ejemplos de lo que me sirve: nombre de comando (tg-scraper), o ruta a script (.py)."
+exit 1

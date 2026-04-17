@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+set -euo pipefail
+BASE_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
+if [[ -x "$BASE_DIR/.venv/bin/maigret" ]]; then
+  exec "$BASE_DIR/.venv/bin/maigret" "$@"
+fi
+exec maigret "$@"

@@ -1,0 +1,4 @@
+echo "[OK] Links: $OUT_DIR/${USERNAME}_${TS}_links.txt"
+
+
+

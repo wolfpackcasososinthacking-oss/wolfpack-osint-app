@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+set -euo pipefail
+# WOLF_DESC: OSINT de números de teléfono (PhoneInfoga) - normaliza números y lanza escaneo
+
+BIN="/usr/local/bin/phoneinfoga"
+
+if [[ ! -x "$BIN" ]]; then
+  echo "[!] No encuentro el binario real en $BIN"
+  echo "    Instálalo (binario oficial) o revisa la ruta."
+  exit 1
+fi
+
+# Si metes SOLO un número, lo convertimos a "scan -n <numero>"
+if [[ $# -eq 1 && "$1" =~ ^\+?[0-9]{6,}$ ]]; then
+  exec "$BIN" scan -n "$1"
+fi
+
+# Si metes args normales, los pasamos tal cual
+exec "$BIN" "$@"
